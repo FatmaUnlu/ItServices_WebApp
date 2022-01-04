@@ -1,0 +1,73 @@
+﻿@using ItServiceApp.ViewModel
+
+@model LoginViewModel
+@{
+
+    ViewBag.Title = "Login Ekranı";
+}
+
+<!--====== Page Title start ======-->
+    <partial name="Partials/_PageStartPartial" />
+<!--====== Page Title End ======-->
+
+<!--====== Shoping Checkout Start  ======-->
+    <section class="shoping-checkout-area section-gap">
+        <div class="container">
+            <div class="user-actions mb-40">
+                <p>Üyeliğiniz var mı?<a asp-controller="Account" asp-action="Register"> Kayıt için Tıklayın</a> <!--Kayıt yoksa registera yönledirme-->
+                    </p>
+                <div asp-validation-summary="All" class="text-danger"></div> <!-- validation mesajlarını göstermeye yarar.-->
+            </div>
+            <form method="post" asp-controller="Account" asp-action="Login">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="billing-details">
+                            <h3 class="title">Giriş Formu</h3>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="UserName"> UserName</label>
+                                        <input type="text" asp-for="UserName">
+                                        <span asp-validation-for=UserName class="text-danger" ></span>
+                                    </div>
+                                </div>
+                                                                                           
+                                <div class="col-lg-12">
+                                     <div class="form-group">
+                                        <label asp-for="Password">Password</label>
+                                        <input type="text" asp-for="Password">
+                                         <span asp-validation-for=Password class="text-danger" ></span>
+                                    </div>
+                                </div>       
+                                 <div class="col-lg-12">
+                                     <div class="form-group">
+                                        <input type="checkbox" asp-for="RememberMe"> <span>Beni Hatırla</span>
+                                         <span asp-validation-for=Password class="text-danger" ></span>
+                                    </div>
+                                </div>  
+                                 <div class="col-lg-4">
+                                    <div class="payment-box mt-30">
+                                        <input type="submit"  class="main-btn value="Giriş Yap">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </form>
+        </div>
+    </section>
+    <!--====== Shoping Checkout End ======-->
+
+    
+    @section Styles
+    {
+        <style>
+            input:{
+                border:solid 1px #e3eeff;
+                height : 50px;
+                padding:0 15px;
+            }
+        </style>
+    }

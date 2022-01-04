@@ -1,0 +1,16 @@
+﻿@model List<Urun>
+@{
+   // Layout = "_Layout"; viewstarts içinde yazdığımız için burda gerek kalmadı.
+    ViewBag.Title = "Ana Sayfa @View";
+}
+
+<h1>Ürünlergyfytf</h1>
+    @foreach(var item in Model)
+{
+    <p>
+        @item.Id - @item.Ad - @($"{item.Fiyat :c2}")
+    </p>
+
+
+}
+
