@@ -9,6 +9,7 @@ namespace ItServiceApp.Extensions
 {
     public static class AppExtensions
     {
+        //istenilen kütüphaneye ekstra metot yazmak istersen kullanabilirsin.
         public static string GetUserId(this HttpContext context)
         {
             return context.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
