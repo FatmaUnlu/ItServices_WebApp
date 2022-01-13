@@ -1,4 +1,5 @@
 using ItServiceApp.Data;
+using ItServiceApp.Extensions;
 using ItServiceApp.InjectOrnek;
 using ItServiceApp.MapperProfiles;
 using ItServiceApp.Models.Identity;
@@ -62,16 +63,19 @@ namespace ItServiceApp
                 options.SlidingExpiration = true;
             });
 
-            services.AddAutoMapper(options =>
-            {
-                options.AddProfile(typeof(AccountProfile));
-            });
+            //Extensions-AppServices sýnýfýna eklendi.
+          //  services.AddAutoMapper(options =>
+          //  {
+          //      options.AddProfile(typeof(AccountProfile));
+          //  });
 
-            // services.AddScoped<IMyDependency, MyDependency>();
-            services.AddTransient<IEmailSender, EmailSender>();//ihtiyaç duyuldukça
-           // services.AddTransient< EmailSender>(); bu þekilde yine enjekte yapýlýr ama loose coupling olmaz.
-          // services.AddScoped<IMyDependency, MyDependency>();//loose coupling
-            services.AddScoped<IMyDependency, newMyDependency>();//loose coupling
+          //  // services.AddScoped<IMyDependency, MyDependency>();
+          //  services.AddTransient<IEmailSender, EmailSender>();//ihtiyaç duyuldukça
+          // // services.AddTransient< EmailSender>(); bu þekilde yine enjekte yapýlýr ama loose coupling olmaz.
+          //// services.AddScoped<IMyDependency, MyDependency>();//loose coupling
+          //  services.AddScoped<IMyDependency, newMyDependency>();//loose coupling
+
+            services.AddApplicationServices(this.Configuration);
 
             services.AddControllersWithViews(); //servise mvc olduðunu bildirme
 
