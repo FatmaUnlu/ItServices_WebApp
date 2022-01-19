@@ -40,18 +40,14 @@
     </div><!--end row-->
 
 </div>
-<link rel="stylesheet" href="~/vendor/devextreme/dist/css/dx.light.css" />
 
 @section Scripts{
-<script type="text/javascript" src="~/vendor/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="~/vendor/devextreme/dist/js/dx.all.js"></script>
 <script>
     $(()=> {
         var userData = null;
         $.ajax({
             url: '@Url.Action("GetUsers","UserApi")',
             //url: '@Url.Action("GetTests","UserApi")',
-
             method: 'GET',
             success: function(response) {
                 console.log(response);
@@ -70,8 +66,58 @@
         });
         function loadGrid() {
             $('#dxGrid').dxDataGrid({
+                showColumnLines:true,
+                allowColumnResizing:true,
+                showRowLines:true,
+                rowAlternationEnabled:true,
+                showBorders : true,
                 dataSource: userData,
-                columns: ['name', 'surname', 'email'],
+                searchPanel:{ /* tabloda arama yapma*/
+                    visible:true,
+                    width:240,
+                    placeholder:"Ara..."
+                },
+                filterRow:{ /*tabloda satırda filtereleme*/
+                    visible:true,
+                    applyFilter:true
+                },
+                headerFilter: {
+                     visible:true,
+                    applyFilter:true
+                },
+                export:{
+                    enabled:true,
+                    fileName:`Tüm kullanıcılar_${parseInt(Math.random() * 1000000000)}`,
+                    allowExportSelectedData:true
+                },
+                paging:{/*ilk açıldıgında kaç kayıt gelsin*/
+                    pageSize:20
+                },
+                pager:{ /*sayfalama*/
+                    showPageSizeSelector:true,
+                    allowedPageSizes:[5,15,30,45],
+                    showInfo:true
+                },
+                columns: [{
+                    caption:'Id',
+                    dataField:'id',
+                    visible:false,
+                    allowFiltering: false
+                },
+                {
+                    caption:'Ad',
+                    dataField:'name',                   
+                },
+                {
+                    caption:'Soyad',
+                    dataField:'surname',                   
+                }, 
+                {
+                    caption:'E-Posta',
+                    dataField:'email',                   
+                },
+                
+                ],
                 showBorders: true,
             });
         }

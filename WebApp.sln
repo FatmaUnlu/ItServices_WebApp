@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayoutKullanimi", "LayoutKu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "E-Ticaret", "E-Ticaret", "{05DD22DE-B9FB-4BBE-B9C3-24F5B3729449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItServiceApp", "ItServiceApp\ItServiceApp.csproj", "{150222F6-37EA-4EF0-9562-4A6D5BF1A754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ItServiceApp", "ItServiceApp\ItServiceApp.csproj", "{150222F6-37EA-4EF0-9562-4A6D5BF1A754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
