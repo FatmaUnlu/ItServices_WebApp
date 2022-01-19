@@ -18,8 +18,8 @@ namespace ItServiceApp.Extensions
                 options.AddProfile(typeof(PaymentProfile));
             });
 
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IPaymentService, IyzikoPaymentService>();
+            services.AddTransient<IEmailSender, EmailSender>(); //her mail kişiye özel ve farklı oldugu için her ihtiyaç duyulduğunda tekrar üretilimesi gerekir.
+            services.AddScoped<IPaymentService, IyzikoPaymentService>(); //IPaymentService kullanacagm yerde IyzikoPayment servis kullanılsın
             services.AddScoped<IMyDependency, newMyDependency>(); 
             //loose coupling
             //services.AddTransient<EmailSender>();

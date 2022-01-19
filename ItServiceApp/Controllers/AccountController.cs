@@ -181,14 +181,14 @@ namespace ItServiceApp.Controllers
 
             if (result.Succeeded)
             {
-                await _emailSender.SendAsync(new EmailMessage()
-                {
-                    //gönderen bilgileri ayarları appsetting.json klasöründe
-                    Contacts = new string[] { "ftmunlu7@gmail.com" },
-                    Body = $"{HttpContext.User.Identity.Name} Sisteme giriş yaptı",
-                    Subject = $"Merhaba Fatma mail geldi mi"
-                });
-                return RedirectToAction("Index", "Home"); //action gerçekleşince Home sayfasına yönlendir. 
+                //await _emailSender.SendAsync(new EmailMessage()
+                //{
+                //    //gönderen bilgileri ayarları appsetting.json klasöründe
+                //    Contacts = new string[] { "ftmunlu7@gmail.com" },
+                //    Body = $"{HttpContext.User.Identity.Name} Sisteme giriş yaptı",
+                //    Subject = $"Merhaba Fatma mail geldi mi"
+                //});
+                return RedirectToAction("Index", "Home",new {area=""}); //action gerçekleşince Home sayfasına yönlendir. 
             }
             else
             {

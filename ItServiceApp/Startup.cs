@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,7 +32,7 @@ namespace ItServiceApp
         }
         public void ConfigureServices(IServiceCollection services)
 
-            //sql server 
+        //sql server 
         {services.AddDbContext<MyContext>(options=>
         {
             options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")); //burdaki SQlConnectioný görünce appsetting.json daki stringi alýr ve veri tabanýna baglanýr.
@@ -91,10 +93,16 @@ namespace ItServiceApp
             {
                 app.UseDeveloperExceptionPage(); //canlýda çalýþmaz. sadece geliþtirmede
             }
-
+          
             app.UseStaticFiles();//wwwroot klasörü içerisindeki yapýlarý kullanmamýzý saðlayan komut css-js vs.
             app.UseHttpsRedirection(); //uygulama httpde de çalýþsýn
-      
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider=new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"node_modules")),
+                RequestPath = new PathString("/vendor")
+            });
+
             app.UseRouting();//
 
             app.UseAuthentication();
@@ -102,7 +110,10 @@ namespace ItServiceApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                //Area Ýçin
+                endpoints.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller=Manage}/{action=Index}/{Id?}"); //name,areaName,pattern
+
+                endpoints.MapControllerRoute( 
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{Id?}");//varsayýlan bir routing oluþturuldu. Home controllerýndaki ýndex sayfasýna yönlendirir ilk açýlýþta.
             });
