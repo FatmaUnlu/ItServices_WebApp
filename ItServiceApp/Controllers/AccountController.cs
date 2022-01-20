@@ -54,13 +54,13 @@ namespace ItServiceApp.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet] //kullanıcıya bilgi sunmak
+        [HttpGet] //kullanıcıya bilgi sunmak.//sayfa yüklendiği anda geçerlidir listeleme için vs de kullanılabilir.
         public IActionResult Register()
         {
             return View();
         }
         [AllowAnonymous]
-        [HttpPost] //veri tabanına veri sunmak
+        [HttpPost] //veri tabanına veri sunmak,
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             //post kısmında öncelikle kontrolleri yapmalısın kayıttan önce

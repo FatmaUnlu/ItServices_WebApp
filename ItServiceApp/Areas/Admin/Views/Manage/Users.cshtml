@@ -42,36 +42,66 @@
 </div>
 
 @section Scripts{
+
+    <script src="~/vendor/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
+
 <script>
+         var dataGrid = null;
     $(()=> {
-        var userData = null;
-        $.ajax({
-            url: '@Url.Action("GetUsers","UserApi")',
-            //url: '@Url.Action("GetTests","UserApi")',
-            method: 'GET',
-            success: function(response) {
-                console.log(response);
-                if (response.isSuccess) {
-                    userData = response.data;
-                    loadGrid();
-                } else {
-                    alert(response.errorMessage);
-                }
-            },
-            error:function(a, b, c) {
-                console.log(a);
-                console.log(b);
-                console.log(c);
-            }
-        });
+        var url='../../../api/userapi';
+        //var userData = null;
+        //$.ajax({
+        //    url: '@Url.Action("GetUsers","UserApi")',
+        //    //url: '@Url.Action("GetTests","UserApi")',
+        //    method: 'GET',
+        //    success: function(response) {
+        //        console.log(response);
+        //        if (response.isSuccess) {
+        //            userData = response.data;
+        //            loadGrid();
+        //        } else {
+        //            alert(response.errorMessage);
+        //        }
+        //    },
+        //    error:function(a, b, c) {
+        //        console.log(a);
+        //        console.log(b);
+        //        console.log(c);
+        //    }
+        //});
+        //direkt çekip yükleyeceğimiz içinajax isteğine ihtiyaç olmuyor artık. UserApiControllerda GetUSees actionında DataSourceloadactions kullandığımız için Kullandığımız Grid kendi isteğini kendi yapacak (WebApı service).Yukarıdaki kodla json formatında gelen veriyi ajax ile gönderiyorduk.
+
         function loadGrid() {
-            $('#dxGrid').dxDataGrid({
+
+           dataGrid = $('#dxGrid').dxDataGrid({  
+
+               remoteOperations:{
+                   paging:true,
+                   filtering :true,
+                   sorting:true,
+                   grouping:true,
+                   summary:true,
+                   groupPaging:true
+               },
+               editing:{ //tabloda güncellemeye izin vermek için
+                   mode:'popup',
+                   allowUpdating:true
+               },
+                dataSource: DevExpress.data.AspNet.createStore({ 
+                   key: 'id',
+                   loadUrl: `${url}/getusers`,
+                    //insertUrl: `${url}/InsertOrder`,
+                     updateUrl: `${url}/updateusers`,
+                    //deleteUrl: `${url}/DeleteOrder`,
+                    //onBeforeSend(method, ajaxOptions) {
+                    // ajaxOptions.xhrFields = { withCredentials: true };
+                    //}
+                   }),                             
                 showColumnLines:true,
                 allowColumnResizing:true,
                 showRowLines:true,
                 rowAlternationEnabled:true,
                 showBorders : true,
-                dataSource: userData,
                 searchPanel:{ /* tabloda arama yapma*/
                     visible:true,
                     width:240,
@@ -98,29 +128,61 @@
                     allowedPageSizes:[5,15,30,45],
                     showInfo:true
                 },
+                 selection:{/* çoklu seçim */
+                    mode:"multiple"
+                },
                 columns: [{
                     caption:'Id',
-                    dataField:'id',
+                    dataField:"id",
                     visible:false,
-                    allowFiltering: false
+                    allowFiltering: false,
+                    formItem:{visible:false}
                 },
                 {
                     caption:'Ad',
-                    dataField:'name',                   
+                    dataField:"name",
                 },
                 {
                     caption:'Soyad',
-                    dataField:'surname',                   
-                }, 
+                    dataField:"surname",
+                },
                 {
                     caption:'E-Posta',
-                    dataField:'email',                   
+                    dataField:"email",
                 },
-                
+                {
+                    caption:'E-Mail Onay',
+                    dataField:'emailConfirmed',
+                    dataType:'boolean'
+                },
+                {
+                    caption:'Kayıt Tarihi',
+                    dataField:"createdDate",
+                    dataType:"date",
+                    format:'dd/MM/yy',
+                    sortOrder:"desc"
+                },
+                {
+                    caption:'Detay',
+                    cellTemplate:function(container,options){
+                        console.log(options);
+                    var current=options.data;
+                    var url = '@Url.Action("UserDetail","Manage")' + '/' + current.id;
+                    //console.log(url)
+
+                    $("<a href=" + url + "/>")
+                    .text("Detay")
+                    .addClass('btn btn-block btn-info btn-sm')
+                    .appendTo(container);
+                    },
+                  formItem:{visible:false}
+                }
+
                 ],
                 showBorders: true,
-            });
+            }).dxDataGrid("instance");
         }
+        loadGrid();
     })
 </script>
 }
