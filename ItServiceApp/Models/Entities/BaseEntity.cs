@@ -12,6 +12,6 @@ namespace ItServiceApp.Models.Entities
         public string CreatedUser { get; set; }
         public DateTime? UpdatedDate { get; set; }
         [StringLength(128)]
-        public DateTime UpdatedUser { get; set; }
+        public string UpdatedUser { get; set; }
     }
 }

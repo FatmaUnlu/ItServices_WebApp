@@ -16,6 +16,7 @@ namespace ItServiceApp.Extensions
             {
                 options.AddProfile(typeof(AccountProfile));
                 options.AddProfile(typeof(PaymentProfile));
+                options.AddProfile<SubscriptionProfile>();
             });
 
             services.AddTransient<IEmailSender, EmailSender>(); //her mail kişiye özel ve farklı oldugu için her ihtiyaç duyulduğunda tekrar üretilimesi gerekir.

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,9 +80,12 @@ namespace ItServiceApp
 
             services.AddApplicationServices(this.Configuration);
 
-            services.AddControllersWithViews(); //servise mvc olduðunu bildirme
 
-
+            services.AddControllersWithViews()//servise mvc olduðunu bildirme
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
         }
 
@@ -96,6 +100,7 @@ namespace ItServiceApp
           
             app.UseStaticFiles();//wwwroot klasörü içerisindeki yapýlarý kullanmamýzý saðlayan komut css-js vs.
             app.UseHttpsRedirection(); //uygulama httpde de çalýþsýn
+
 
             app.UseStaticFiles(new StaticFileOptions()
             {
